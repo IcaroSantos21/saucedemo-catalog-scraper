@@ -14,12 +14,16 @@ def driver():
     driver.quit()
 
 @pytest.fixture
-def inventory_page(driver):
-    login_page = LoginPage(driver)
-    login_page.open()
-    login_page.login("standard_user", "secret_sauce")
+def login_page(driver):
+    page = LoginPage(driver)
+    page.open()
+    return page
 
+@pytest.fixture
+def inventory_page(driver, login_page):
+    login_page.login('standard_user', 'secret_sauce')
     page = InventoryPage(driver)
+
     page.wait_for_products()
     return page
 
