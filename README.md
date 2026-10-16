@@ -49,7 +49,11 @@ São 6 produtos, mais a linha de cabeçalho.
 
 ```
 .
-├── main.py
+├── pages/
+│   ├── __init__.py
+│   ├── login_page.py        # LoginPage: abrir o site e fazer login
+│   └── inventory_page.py    # InventoryPage: esperar e coletar os produtos
+├── main.py                  # orquestra o fluxo e salva o CSV
 ├── requirements.txt
 └── README.md
 ```
@@ -60,10 +64,11 @@ São 6 produtos, mais a linha de cabeçalho.
 - **Busca relativa ao produto**: nome, descrição e preço são procurados dentro de cada cartão (`produto.find_element`), não na página inteira.
 - **`try/finally`** garante que o navegador feche sempre.
 - **`DictWriter`** com `encoding="utf-8"` e `newline=""` para o CSV sair correto em qualquer sistema.
+- **Page Object Model**: cada página do site é uma classe (`LoginPage`, `InventoryPage`) com seus locators e ações. O `main.py` só descreve o fluxo, e se o site mudar um seletor, o ajuste é feito em um único lugar.
 
 ## Próximos passos
 
-- [ ] Separar em Page Objects (`LoginPage` e `InventoryPage`)
+- [x] Separar em Page Objects (`LoginPage` e `InventoryPage`)
 - [ ] Adicionar testes com pytest (por exemplo, validar que são 6 produtos)
 - [ ] Refazer o fluxo com Playwright e comparar as duas abordagens
 - [ ] Rodar em modo headless e configurar no GitHub Actions
