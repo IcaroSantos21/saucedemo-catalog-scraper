@@ -34,6 +34,14 @@ python main.py
 
 O Selenium 4.6+ baixa o driver do navegador automaticamente, então não precisa instalar o geckodriver à mão. O Firefox precisa estar instalado.
 
+## Testes
+
+```bash
+pytest -v
+```
+
+Os testes validam o catálogo: quantidade de produtos, nome e descrição preenchidos, preços positivos, nomes únicos e o preço de um produto específico. Para ver o navegador durante os testes, comente a linha `-headless` em `tests/conftest.py`.
+
 ## Resultado
 
 O arquivo `catalogo.csv` é gerado na pasta do projeto, com este formato:
@@ -53,7 +61,11 @@ São 6 produtos, mais a linha de cabeçalho.
 │   ├── __init__.py
 │   ├── login_page.py        # LoginPage: abrir o site e fazer login
 │   └── inventory_page.py    # InventoryPage: esperar e coletar os produtos
+├── tests/
+│   ├── conftest.py          # fixtures (driver e página de inventário)
+│   └── test_inventory.py    # testes do catálogo
 ├── main.py                  # orquestra o fluxo e salva o CSV
+├── pytest.ini
 ├── requirements.txt
 └── README.md
 ```
@@ -65,10 +77,11 @@ São 6 produtos, mais a linha de cabeçalho.
 - **`try/finally`** garante que o navegador feche sempre.
 - **`DictWriter`** com `encoding="utf-8"` e `newline=""` para o CSV sair correto em qualquer sistema.
 - **Page Object Model**: cada página do site é uma classe (`LoginPage`, `InventoryPage`) com seus locators e ações. O `main.py` só descreve o fluxo, e se o site mudar um seletor, o ajuste é feito em um único lugar.
+- **Fixtures do pytest** abrem e fecham o navegador a cada teste, o que deixa os testes independentes entre si. As asserções ficam nos testes, e os Page Objects só sabem interagir com a página.
 
 ## Próximos passos
 
 - [x] Separar em Page Objects (`LoginPage` e `InventoryPage`)
-- [ ] Adicionar testes com pytest (por exemplo, validar que são 6 produtos)
+- [x] Adicionar testes com pytest (por exemplo, validar que são 6 produtos)
 - [ ] Refazer o fluxo com Playwright e comparar as duas abordagens
 - [ ] Rodar em modo headless e configurar no GitHub Actions
