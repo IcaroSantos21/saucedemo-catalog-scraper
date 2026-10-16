@@ -64,6 +64,7 @@ São 6 produtos, mais a linha de cabeçalho.
 ├── tests/
 │   ├── conftest.py          # fixtures (driver e página de inventário)
 │   └── test_inventory.py    # testes do catálogo
+|   └── test_login.py        # testes do login
 ├── main.py                  # orquestra o fluxo e salva o CSV
 ├── pytest.ini
 ├── requirements.txt
